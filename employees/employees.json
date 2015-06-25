@@ -1,0 +1,57 @@
+[
+    {
+	"name": "Emmanuel",
+	"inOffice": false,
+  	"id": 1
+    },
+    {
+        "name": "David",
+        "inOffice": false,
+  	"id": 2
+    },
+    {  
+        "name": "Renee",
+        "inOffice": false,
+  	"id": 3
+    },
+    {
+        "name": "Jenny",
+        "inOffice": false,
+  	"id": 4
+    },
+    {
+        "name": "Zane",
+        "inOffice": false,
+  	"id": 5
+    },
+    {
+        "name": "Jared",
+        "inOffice": false,
+  	"id": 6
+    },
+    {
+        "name": "Steven",
+        "inOffice": false,
+  	"id": 7
+    },
+    {
+        "name": "Brian",
+        "inOffice": false,
+  	"id": 8
+    },
+    {
+        "name": "Jef",
+        "inOffice": false,
+  	"id": 9
+    },
+    {
+        "name": "Sean",
+        "inOffice": false,
+  	"id": 10
+    },
+    {
+        "name": "Spencer",
+        "inOffice": false,
+  	"id": 11
+    }
+]
