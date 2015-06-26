@@ -4,9 +4,7 @@ class Location < ActiveRecord::Base
 	include Net#::HTTP
 	include JSON
 
-  has_many	:users
-
-  # attr_reader	:ip_address
+  belongs_to 	:user_group
 
   def coordinates
   	@coordinates
