@@ -19,5 +19,13 @@
 </head>
 <body>
   <%= yield %>
+  <hr>
+  <% if session[:user_id] %>
+    <h5>LOGGED IN!</h5>
+    <form method="POST" action="/logout">
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="LOGOUT">
+    </form>
+  <% end %>
 </body>
 </html>

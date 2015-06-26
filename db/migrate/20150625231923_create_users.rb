@@ -7,6 +7,8 @@ class CreateUsers < ActiveRecord::Migration
   		t.string		:email, null: false
   		t.string		:password_hash
   		t.boolean		:in_office
+
+  		t.timestamps
   	end
   end
 end
