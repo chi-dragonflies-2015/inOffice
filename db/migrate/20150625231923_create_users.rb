@@ -8,6 +8,8 @@ class CreateUsers < ActiveRecord::Migration
   		t.string		:password_hash
   		t.boolean		:in_office
 
+      t.references  :user_group
+
   		t.timestamps
   	end
   end
