@@ -1,0 +1,13 @@
+<form method="POST" action="/signup"><h1>SIGNUP</h1>
+	<% if @errors %>
+		<% @errors.each do |key, value| %>
+			<h5><%= value %></h5>
+		<% end %>
+	<% end %>
+	<p><input name="signup[first_name]" placeholder="first name"></p>
+	<p><input name="signup[last_name]" placeholder="last name"></p>
+	<p><input name="signup[user_name]" placeholder="username"></p>
+	<p><input type="email" name="signup[email]" placeholder="email"></p>
+	<p><input type="password" name="signup[password]" placeholder="password"></p>
+	<input type="submit">
+</form>

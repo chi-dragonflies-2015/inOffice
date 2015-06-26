@@ -1,0 +1,8 @@
+<div class="container">
+  <h1>Welcome to inOffice!</h1>
+
+  <% unless session[:user_id] %>
+	  <a href="/login">LOGIN</a>
+	  <a href="/signup">SIGNUP</a>
+  <% end %>
+</div>

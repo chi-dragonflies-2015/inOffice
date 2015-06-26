@@ -1,0 +1,10 @@
+<form method="POST" action="/login"><h1>LOGIN</h1>
+	<% if @errors %>
+		<% @errors.each do |key, value| %>
+			<h5><%= value %></h5>
+		<% end %>
+	<% end %>
+	<p><input name="user_name" placeholder="username"></p>
+	<p><input type="password" name="password" placeholder="password"></p>
+	<input type="submit">
+</form>
