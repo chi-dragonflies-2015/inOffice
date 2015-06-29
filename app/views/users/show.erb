@@ -1,1 +1,10 @@
 <h3><%= @user.name %>'s Profile Page</h3>
+<h4>AVAILABLE USER GROUPS:</h4>
+
+<ul>
+	<!-- SHOW USER GROUPS WHEN ASSOC AVAILABLE -->
+	
+	<% @user_groups.each do |user_group| %>
+		<li><a href="/user_groups/<%= user_group.id %>"><%= user_group.name %></a></li>
+	<% end %>
+</ul>

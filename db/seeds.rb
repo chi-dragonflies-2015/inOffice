@@ -17,7 +17,7 @@ require_relative '../config/environment'
 	location_name = Faker::Company.name
 	ip = Faker::Internet.ip_v4_address
 	location = Location.create!(	name: 				location_name,
-																ip_address: 	ip )
+																ip: 	ip )
 
 	group_name = Faker::Commerce.department
 	UserGroup.create!(	name: group_name	).locations << location

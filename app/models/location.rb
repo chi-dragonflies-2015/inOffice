@@ -16,8 +16,10 @@ class Location < ActiveRecord::Base
   	# p @ip_address.class
   end	
 
-  def ip_address=(new_ip)
-  	@ip_address = new_ip
+  def ip=(new_ip=nil)
+    current_ip = UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
+    new_ip == nil ? @ip_address = current_ip : @ip_address = new_ip
+    self.ip_address = @ip_address
   	@coordinates = get_coordinates
   end
 
@@ -35,4 +37,5 @@ class Location < ActiveRecord::Base
   	coordinates ||= { latitude: self.latitude, longitude: self.longitude }
   	return coordinates
   end
+
 end
