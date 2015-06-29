@@ -4,7 +4,8 @@ class Location < ActiveRecord::Base
 	include Net#::HTTP
 	include JSON
 
-  belongs_to 	:user_group
+  # belongs_to  :user_group
+  belongs_to 	:locatable, polymorphic: true
 
   def coordinates
   	@coordinates

@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 	include BCrypt
 
   belongs_to  :user_group
+  has_many    :locations, as: :locatable
 
 	validates		:user_name, uniqueness: true
 	validates 	:password_hash, presence: true
