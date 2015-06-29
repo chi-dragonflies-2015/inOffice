@@ -9,8 +9,9 @@ end
 post '/login' do
 	user = User.authenticate(params[:user_name], params[:password])
 	if user.id
+		# session[:user_id] = nil
 		session[:user_id] = user.id
-		redirect "/users/#{user.id}"
+		redirect "/users/#{ user.id }"
 	else
 		@errors = user.errors.messages
 		p @errors
@@ -19,6 +20,7 @@ post '/login' do
 end
 
 get '/users/:id' do
+	@user_groups = UserGroup.all
 	@user = User.find_by(id: params[:id])
 	erb :"/users/show"
 end

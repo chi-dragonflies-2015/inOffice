@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   end
 
   def inOffice
-    self.in_office = !self.in_office
+    self.update_attribute("in_office", !self.in_office)
   end
 
   #--AUTHENTICATION---------------------------------->>>
