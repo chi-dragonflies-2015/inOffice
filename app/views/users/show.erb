@@ -1,10 +1,21 @@
-<h3><%= @user.name %>'s Profile Page</h3>
-<h4>AVAILABLE USER GROUPS:</h4>
+<h1><%= @user.name %>'s Profile Page</h1>
 
+
+<!-- SHOW USER GROUPS WHEN ASSOC AVAILABLE -->
+<% if @user.user_group %>
+	<h4>JOINED USER GROUP:</h4>
+	<ul>
+			<li><a href="/user_groups/<%= @user.user_group.id %>"><%= @user.user_group.name %></a></li>
+	</ul>
+<% end %>
+
+
+<h4>ALL AVAILABLE USER GROUPS:</h4>
 <ul>
-	<!-- SHOW USER GROUPS WHEN ASSOC AVAILABLE -->
-	
 	<% @user_groups.each do |user_group| %>
-		<li><a href="/user_groups/<%= user_group.id %>"><%= user_group.name %></a></li>
+		<li>
+			<%= "<a href='/user_groups/#{ user_group.id }'>#{ user_group.name }</a> |" +
+			"<a href='/user_groups/#{ user_group.id }/join'>JOIN!</a>" unless @user.user_group == user_group %>
+		</li>
 	<% end %>
 </ul>

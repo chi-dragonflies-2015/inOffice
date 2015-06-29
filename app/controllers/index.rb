@@ -7,10 +7,11 @@ get '/login' do
 end
 
 post '/login' do
-	@user = User.authenticate(params[:user_name], params[:password])
-	if @user.id
+	user = User.authenticate(params[:user_name], params[:password])
+	if user.id
+		# session[:user_id] = nil
 		session[:user_id] = user.id
-		redirect "/users/#{user.id}"
+		redirect "/users/#{ user.id }"
 	else
 		@errors = user.errors.messages
 		p @errors

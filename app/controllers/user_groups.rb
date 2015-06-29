@@ -6,6 +6,17 @@ get '/user_groups/:id' do
 	erb :"/user_groups/index"
 end
 
+get '/user_groups/:id/join' do
+	user = User.find_by(id: session[:user_id])
+	if user
+		user_group = UserGroup.find_by(id: params[:id])
+		user_group.users << user
+		redirect "/user_groups/#{params[:id]}"
+	else
+		erb :"/users/login"
+	end
+end
+
 get '/user_groups/:id/get_employees' do
 	@user_group = UserGroup.find_by(id: params[:id])
 	@users = @user_group.users

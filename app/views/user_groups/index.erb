@@ -13,30 +13,26 @@
                     <div class="grid-100">
                     </div>
                     <section class="grid-70 main">
-                        <h2>Who is in the Office?</h2>
+                        <h2>Who of the "<%= @user_group.name %>" group is in the Office?</h2>
                         <p>this is a little widget that will dynamically show who is in the office and who is not</p>
                     </section>
                     <aside class="grid-30 list">
                         <h2>Employee Office Status</h2>
-                        <div id="employeeList">
-
-                            
+                        <div id="employeeList" route="/user_groups/<%= @user_group.id%>/get_employees">
 
                                 <ul class="bulleted">
                                    <% @users.each do |employee| %>
                                         <% if employee.inOffice? == true %>
                                             <li class="in" data-id="<%= employee.id %>"><%= employee.id %>
-                                                <button id="<%= employee.id %>"><%= employee.name %></button>
+                                                <button id="<%= employee.id %>" formaction="/users/<%= employee.id %>/change_state" formmethod="POST"><%= employee.name %></button>
                                             </li>
                                          <% else %>
                                             <li class="out" data-id="<%= employee.id %>"><%= employee.id %>
-                                                <button id="<%= employee.id %>"><%= employee.name %></button>
+                                                <button id="<%= employee.id %>" formaction="/users/<%= employee.id %>/change_state" formmethod="POST"><%= employee.name %></button>
                                             </li>
                                          <% end %>
                                    <% end %>
                                 </ul>
-
-                            
 
                         </div>
                     </aside>
