@@ -6,7 +6,7 @@ class CreateLocations < ActiveRecord::Migration
   		t.float				:latitude
   		t.float				:longitude
 
-  		t.references 	:user_group
+  		# t.references 	:user_group
 
   		t.timestamps
   	end

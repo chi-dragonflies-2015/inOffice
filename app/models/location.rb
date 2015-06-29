@@ -4,7 +4,6 @@ class Location < ActiveRecord::Base
 	include Net#::HTTP
 	include JSON
 
-  # belongs_to  :user_group
   belongs_to 	:locatable, polymorphic: true
 
   def coordinates
@@ -13,13 +12,11 @@ class Location < ActiveRecord::Base
 
   def ip_address
   	@ip_address
-  	# p @ip_address
-  	# p @ip_address.class
   end	
 
   def ip=(new_ip=nil)
     current_ip = UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
-    new_ip == nil ? @ip_address = current_ip : @ip_address = new_ip
+    new_ip ? @ip_address = current_ip : @ip_address = new_ip
     self.ip_address = @ip_address
   	@coordinates = get_coordinates
   end

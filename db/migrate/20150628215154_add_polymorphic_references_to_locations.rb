@@ -1,9 +1,13 @@
 class AddPolymorphicReferencesToLocations < ActiveRecord::Migration
-  def self.up
-  	add_reference 	:locations, :locatable, index: true	
+  def up
+    change_table :locations do |t|
+      t.references :locatable, :polymorphic => true
+    end
   end
 
-  def self.down
-  	remove_reference 	:locations, :locatable, index: true	
+  def down
+    change_table :locations do |t|
+      t.remove_references :locatable, :polymorphic => true
+    end
   end
 end

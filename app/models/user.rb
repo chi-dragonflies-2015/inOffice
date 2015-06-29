@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 	include BCrypt
 
   belongs_to  :user_group
-  has_many    :locations, as: :locatable
+  has_one     :location, as: :locatable
 
 	validates		:user_name, uniqueness: true
 	validates 	:password_hash, presence: true
@@ -13,12 +13,19 @@ class User < ActiveRecord::Base
   	"#{self.first_name} #{self.last_name}"
   end	
 
+  # def ip_address
+  #   @ip_address
+  # end
+
   def inOffice?
     self.in_office
   end
 
   def inOffice
-    self.update_attribute("in_office", !self.in_office)
+    @ip_address = UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
+    @location = Location.create(  name: location_name,
+                                  ip:   @ip_address  )
+    self.location = @location
   end
 
   #--AUTHENTICATION---------------------------------->>>

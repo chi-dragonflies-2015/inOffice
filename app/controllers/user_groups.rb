@@ -32,7 +32,10 @@ end
 
 post '/users/:id/change_state' do 
 	user = User.find_by(id: params[:id])
-	user.inOffice
+	user.inOffice # => gets current_up and location
+	if user.location.ip_address == user_group.location.ip_address
+		user.update_attribute("in_office", !self.in_office)
+	end
 	p user.inOffice?
 end
 
