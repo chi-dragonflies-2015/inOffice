@@ -1,0 +1,11 @@
+<form method="POST" action="/user_groups/new"><h1>SIGNUP</h1>
+	<% if @errors %>
+		<% @errors.each do |key, value| %>
+			<h5><%= value %></h5>
+		<% end %>
+	<% end %>
+	<p><input name="group[name]" placeholder="group name"></p>
+	<p><input name="location[name]" placeholder="location name"></p>
+	<p><input name="location[ip]" value="<%= @current_ip %>"></p>
+	<input type="submit">
+</form>

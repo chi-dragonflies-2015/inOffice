@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
   def inOffice
     @ip_address = UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
-    @location = Location.create(  name: location_name,
+    @location = Location.create(  name: "my_location",
                                   ip:   @ip_address  )
     self.location = @location
   end
