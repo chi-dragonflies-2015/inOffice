@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
   		t.string		  :user_name, null: false
   		t.string		  :email, null: false
   		t.string		  :password_hash
-  		t.boolean		  :in_office
+  		t.boolean		  :in_office, default: false
 
       t.references  :user_group
       t.references  :location

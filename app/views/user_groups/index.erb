@@ -26,12 +26,12 @@
                                             <li class="in" data-id="<%= employee.id %>"><%= employee.id %>
                                                 <button id="<%= employee.id %>" formaction="/users/<%= employee.id %>/change_state" formmethod="POST"><%= employee.name %></button>
                                             </li>
-                                         <% else %>
+                                        <% else %>
                                             <li class="out" data-id="<%= employee.id %>"><%= employee.id %>
                                                 <button id="<%= employee.id %>" formaction="/users/<%= employee.id %>/change_state" formmethod="POST"><%= employee.name %></button>
                                             </li>
-                                         <% end %>
-                                   <% end %>
+                                        <% end %>
+                                    <% end %>
                                 </ul>
 
                         </div>
