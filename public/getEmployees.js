@@ -25,18 +25,27 @@ function updateState() {
     // alert("taget acquired!");
     event.preventDefault();
     $button = $(event.target);
-    $employee = $button.parent();
+    $employee = $button.parent(); // <li></li>
     route = $button.attr("formaction")
     console.log(route);
     // console.log($button[0]);
     // console.log($button.parent()[0]);
 
+    $list = $employee.parent();
+    $employees = $list.children("li");
+    $list.html($employees);
+    $list.css("color", "red");
+
     $.ajax({
         type: "POST",
         url: route,
-        success: function(response) {
-            // console.log(response);
-            $employee.attr("class",response)
+        success: function(response) { // => returns as JSON
+            // response = JSON.parse(response);
+            console.log(response);
+            console.log(response.state);
+            console.log(response.errors);
+            $employee.before(response.errors)
+            $employee.attr("class",response.state);
         }
     });
 };

@@ -17,8 +17,22 @@ class User < ActiveRecord::Base
   #   @ip_address
   # end
 
+  def internet_connection?
+    # Net::Ping::TCP.new('www.google.com', 'http').ping?
+    begin 
+      true if Net::HTTP.new('www.google.com').head('/').kind_of? Net::HTTPOK
+    rescue
+      false
+    end
+  end
+
   def current_ip
-    UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
+    if internet_connection?
+      current_ip = UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
+      return current_ip
+    else
+      return "127.0.0.1" # => local_ip
+    end
   end
 
   def inOffice?

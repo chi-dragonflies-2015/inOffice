@@ -4,15 +4,16 @@ get '/users/:id' do
 end
 
 post '/users/:id/change_state' do 
+	content_type :json
+
 	user = User.find_by(id: params[:id])
 	user_group = user.user_group
 	if user.current_ip == user_group.location.ip_address
-	# user.inOffice # => now gets current_ip and location instead of toggling self.in_office
-		# user.update_attribute("in_office", !user.inOffice?)#!self.in_office)
 		user.change_state
 		p user.inOffice? ? "#{user.name} is IN" : "#{user.name} is OUT"
-		return user.inOffice? ? "in" : "out"
+		return user.inOffice? ? { state: "in", errors: user.errors[:in_office] }.to_json : { state: "out", errors: user.errors[:in_office] }.to_json
 	else
-		return user.inOffice? ? "in" : "out"
+		user.errors.add(:in_office, "Your current ip DOES NOT match that of this group!")
+		return user.inOffice? ? { state: "in", errors: user.errors[:in_office] }.to_json : { state: "out", errors: user.errors[:in_office] }.to_json
 	end
 end
