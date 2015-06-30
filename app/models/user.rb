@@ -27,6 +27,10 @@ class User < ActiveRecord::Base
 
   def change_state
     self.update_attribute("in_office", !self.inOffice?)
+  end 
+
+  def reset_state
+    self.update_attribute("in_office", "f")
   end
 
   # def inOffice # => NEEDS WORK! 

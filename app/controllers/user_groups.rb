@@ -3,6 +3,7 @@ get '/user_groups/:id/join' do
 	if user
 		user_group = UserGroup.find_by(id: params[:id])
 		user_group.users << user
+		user.reset_state
 		redirect "/user_groups/#{params[:id]}"
 	else
 		erb :"/users/login"
