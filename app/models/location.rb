@@ -3,6 +3,7 @@ require_relative '../../config/environment'
 class Location < ActiveRecord::Base
 	include Net#::HTTP
 	include JSON
+  # include Faker
 
   belongs_to 	:locatable, polymorphic: true
 
@@ -10,13 +11,14 @@ class Location < ActiveRecord::Base
   	@coordinates
   end	
 
-  def ip_address
-  	@ip_address
-  end	
+  # def ip_address
+  # 	self.ip_address
+  # end	
 
   def ip=(new_ip=nil)
     current_ip = UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
     new_ip ? @ip_address = current_ip : @ip_address = new_ip
+    # @ip_address ? @ip_address : @ip_address = Faker::Internet.ip_v4_address 
     self.ip_address = @ip_address
   	@coordinates = get_coordinates
   end
@@ -27,7 +29,7 @@ class Location < ActiveRecord::Base
   	uri = URI.parse("http://ip-api.com/json/" + @ip_address)
   	http = Net::HTTP.new(uri.host, uri.port)
   	request = Net::HTTP::Get.new(uri)
-  	response = JSON.parse http.request(request).body
+  	response = JSON.parse http.request(request).body # => requires Internet connection
 
   	self.longitude ||= response['lat']
   	self.latitude ||= response['lon']

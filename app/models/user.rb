@@ -17,16 +17,24 @@ class User < ActiveRecord::Base
   #   @ip_address
   # end
 
+  def current_ip
+    UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
+  end
+
   def inOffice?
     self.in_office
   end
 
-  def inOffice
-    @ip_address = UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
-    @location = Location.create(  name: location_name,
-                                  ip:   @ip_address  )
-    self.location = @location
+  def change_state
+    self.update_attribute("in_office", !self.inOffice?)
   end
+
+  # def inOffice # => NEEDS WORK! 
+  #   @ip_address = UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
+  #   @location = Location.create!(  name: "#{self.first_name}_location",
+  #                                  ip:   @ip_address  ) # => SHOULD NOT SAVE!!!
+  #   self.location = @location
+  # end
 
   #--AUTHENTICATION---------------------------------->>>
 
