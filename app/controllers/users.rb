@@ -9,9 +9,8 @@ post '/users/:id/change_state' do
 	# user.inOffice # => now gets current_ip and location instead of toggling self.in_office
 	if user.current_ip == user_group.location.ip_address
 		# user.update_attribute("in_office", !user.inOffice?)#!self.in_office)
-		p user.inOffice?
 		user.change_state
-		p user.inOffice?
+		p user.inOffice? ? "#{user.name} is IN" : "#{user.name} is OUT"
+		return user.inOffice? ? "in" : "out"
 	end
-	user.inOffice? ? "#{user.name} is IN" : "#{user.name} is OUT"
 end

@@ -34,15 +34,9 @@ function updateState() {
     $.ajax({
         type: "POST",
         url: route,
-        success: function() {
-            if ($employee.attr("class") == "in") {
-                // alert("class is 'in'");
-                $employee.attr("class","out");
-                // console.log($employee.attr("data-state","false"));
-            } else {
-                $employee.attr("class","in");
-                // console.log($employee.attr("data-state","true"));
-            }
+        success: function(response) {
+            // console.log(response);
+            $employee.attr("class",response)
         }
     });
 };

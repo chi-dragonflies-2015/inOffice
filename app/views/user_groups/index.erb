@@ -21,16 +21,12 @@
                         <div id="employeeList" route="/user_groups/<%= @user_group.id%>/get_employees">
 
                                 <ul class="bulleted">
-                                   <% @users.each do |employee| %>
-                                        <% if employee.inOffice? == true %>
-                                            <li class="in" data-id="<%= employee.id %>"><%= employee.id %>
+                                    <% @users.each do |employee| %>
+                                        
+                                            <li class="<%= employee.inOffice? ? "in" : "out" %>" data-id="<%= employee.id %>"><%= employee.id %>
                                                 <button id="<%= employee.id %>" formaction="/users/<%= employee.id %>/change_state" formmethod="POST"><%= employee.name %></button>
                                             </li>
-                                        <% else %>
-                                            <li class="out" data-id="<%= employee.id %>"><%= employee.id %>
-                                                <button id="<%= employee.id %>" formaction="/users/<%= employee.id %>/change_state" formmethod="POST"><%= employee.name %></button>
-                                            </li>
-                                        <% end %>
+                                       
                                     <% end %>
                                 </ul>
 
