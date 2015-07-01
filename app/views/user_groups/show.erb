@@ -1,9 +1,46 @@
-<h3><%= @user_group.name %>'s Group Page</h3>
-<h4>USERS:</h4>
+<!DOCTYPE html>
+<html>
+    <head>
+       <meta charset="utf-8">
+       <link href="http://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" type="text/css">
+       <!-- <link href="employees.css" rel="stylesheet" type="text/css"> -->
+       <title>Check-in App</title>
+    </head>
+    <body>
+        <div class="grid-container centered">
+            <div class="grid-100">
+                <div class="contained">
+                    <div class="grid-100">
+                    </div>
+                    <section class="grid-70 main">
+                        <h2>Who of the "<%= @user_group.name %>" group is in the Office?</h2>
+                        <p>this is a little widget that will dynamically show who is in the office and who is not</p>
+                    </section>
+                    <aside class="grid-30 list">
+                        <h2>Employee Office Status</h2>
+                        <div id="employeeList" route="/user_groups/<%= @user_group.id%>/get_employees">
 
-<ul>
-	<!-- SHOW USER GROUPS WHEN ASSOC AVAILABLE -->
-	<% @users.each do |user| %>
-		<li><%= user %></li>
-	<% end %>
-</ul>
+                                <ul class="bulleted">
+                                    <% @users.each do |employee| %>
+                                        
+                                            <li class="<%= employee.inOffice? ? "in" : "out" %>" data-id="<%= employee.id %>"><%= employee.id %>
+                                                <button id="<%= employee.id %>" formaction="/users/<%= employee.id %>/change_state" formmethod="POST"><%= employee.name %></button>
+                                            </li>
+                                       
+                                    <% end %>
+                                </ul>
+
+                        </div>
+                    </aside>
+                    <footer class="grid-100">
+                        <p>Copyright, ObiCorporation</p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <!--script src="../../public/js/lodash.min.js"></script-->
+    <!--script src="getEmployees.js"></script-->
+    </body>
+</html>

@@ -3,8 +3,9 @@ require_relative '../../config/environment'
 class User < ActiveRecord::Base
 	include BCrypt
 
-  belongs_to  :user_group
-  has_one     :location, as: :locatable
+  has_many    :user_groups
+  # has_one     :location, as: :locatable
+  belongs_to  :location
 
 	validates		:user_name, uniqueness: true
 	validates 	:password_hash, presence: true
@@ -31,7 +32,7 @@ class User < ActiveRecord::Base
       current_ip = UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
       return current_ip
     else
-      return "127.0.0.1" # => local_ip
+      return "127.0.0.1:9393" # => local_ip
     end
   end
 
