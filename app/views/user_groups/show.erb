@@ -24,7 +24,7 @@
                                     <% @users.each do |employee| %>
                                         
                                             <li class="<%= employee.inOffice? ? "in" : "out" %>" data-id="<%= employee.id %>"><%= employee.id %>
-                                                <button id="<%= employee.id %>" formaction="/users/<%= employee.id %>/change_state" formmethod="POST"><%= employee.user.name %></button>
+                                                <button id="<%= employee.id %>" formaction="/user_groups/<%= @user_group.id %>/change_state" formmethod="POST"><%= employee.user.name %></button>
                                             </li>
                                        
                                     <% end %>
