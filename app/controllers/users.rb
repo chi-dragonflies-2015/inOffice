@@ -10,13 +10,13 @@ end
 post '/users/:id/change_state' do 
 	content_type :json
 
-	user = User.find_by(id: params[:id])
-	puts "\n\n" + ">" * 10 + "#{ user }" + "\n\n"
-	user_group = user.user_group
-	puts "\n\n" + ">" * 10 + "#{ user_group }" + "\n\n"
-	if user_group.location.users.include?(user)
+	user = User.find_by(id: session[:user_id])
+	puts "\n\n" + ">" * 10 + "#{ user }, #{ user.name }" + "\n\n"
+	user_group = user.memberships.find_by(user_id: user.id).user_group
+	puts "\n\n" + ">" * 10 + "#{ user_group }, #{ user_group.name }" + "\n\n"
+	# if user_group.location.users.include?(user)
 	# if user.location == user_group.location
-	# if user.current_ip == user_group.location.ip_address
+	if user.current_ip == user_group.location.ip_address
 		user.change_state
 		p user.inOffice? ? "#{ user.name } is IN" : "#{ user.name } is OUT"
 		return user.inOffice? ? { state: "in", errors: user.errors[:in_office] }.to_json : { state: "out", errors: user.errors[:in_office] }.to_json
