@@ -1,5 +1,6 @@
 require_relative '../config/environment'
 
+# USERS
 10.times do 
 	first_name = Faker::Name.first_name
 	last_name = Faker::Name.last_name
@@ -12,7 +13,7 @@ require_relative '../config/environment'
 								password: 	"password" )
 end
 
-
+# USER_GROUPS & LOCATIONS
 5.times do 
 	location_name = Faker::Company.name
 	ip = Faker::Internet.ip_v4_address
@@ -21,4 +22,12 @@ end
 
 	group_name = Faker::Commerce.department
 	UserGroup.create!(	name: group_name	).location = location
+end
+
+# MEMBERSHIPS
+10.times do
+	membership = Membership.create(user: User.find( rand(1..10) ), user_group: UserGroup.find( rand(1..5) ))
+	unless membership.valid?
+		redo
+	end
 end

@@ -3,12 +3,20 @@ require_relative '../../config/environment'
 class User < ActiveRecord::Base
 	include BCrypt
 
- 	has_many 	:memberships
- 	has_many 	:user_groups, through: :memberships
+  has_many    :user_groups
+  # has_one     :location, as: :locatable
+  belongs_to  :location
 
- 	def name
+	validates		:user_name, uniqueness: true
+	validates 	:password_hash, presence: true
+
+  def name
   	"#{self.first_name} #{self.last_name}"
   end	
+
+  # def ip_address
+  #   @ip_address
+  # end
 
   def internet_connection?
     # Net::Ping::TCP.new('www.google.com', 'http').ping?
@@ -28,6 +36,24 @@ class User < ActiveRecord::Base
     end
   end
 
+  def inOffice?
+    self.in_office
+  end
+
+  def change_state
+    self.update_attribute("in_office", !self.inOffice?)
+  end 
+
+  def reset_state
+    self.update_attribute("in_office", "f")
+  end
+
+  # def inOffice # => NEEDS WORK! 
+  #   @ip_address = UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
+  #   @location = Location.create!(  name: "#{self.first_name}_location",
+  #                                  ip:   @ip_address  ) # => SHOULD NOT SAVE!!!
+  #   self.location = @location
+  # end
 
   #--AUTHENTICATION---------------------------------->>>
 
