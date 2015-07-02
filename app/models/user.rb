@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
   end	
 
   def internet_connection?
-    # Net::Ping::TCP.new('www.google.com', 'http').ping?
     begin 
       true if Net::HTTP.new('www.google.com').head('/').kind_of? Net::HTTPOK
     rescue

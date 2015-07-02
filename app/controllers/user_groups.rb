@@ -1,11 +1,3 @@
-=begin 
-	USER CAN:
-		>>> CREATE UserGroup
-		> JOIN UserGroup
-		> CHANGE STATE for self.in_office
-=end
-
-
 # GET "NEW UserGroup" FORM
 get '/user_groups/new' do
 	user = User.find_by(id: session[:user_id])
@@ -18,12 +10,8 @@ post '/user_groups/new' do
 	user = User.find_by(id: session[:user_id])
 
 	location = Location.create(params[:location])
-	# puts "\n\n" + ">" * 10 + "#{ location }" + "\n\n"
 	user_group = UserGroup.create(params[:group])
-	# puts "\n\n" + ">" * 10 + "#{ user_group }" + "\n\n"
 	user_group.location = location
-	# puts "\n\n" + ">" * 10 + "#{ user_group.location }" + "\n\n"
-	# puts "\n\n" + ">" * 10 + "#{ user_group.location.users.map{|user|user.name} }" + "\n\n"
 	
 	redirect "/users/#{ user.id }"
 end
@@ -36,19 +24,9 @@ get '/user_groups/:id/join' do
 	puts "\n\n" + ">" * 10 + "#{ user }, #{ user.name }" + "\n\n"
 	user_group = UserGroup.find_by(id: params[:id])
 	puts "\n\n" + ">" * 10 + "#{ user_group }, #{ user_group.name }" + "\n\n"
-	# users = user_group.users # => WHY?!
 	if user && user_group
-
-		# if user.current_ip == user_group.location.ip_address
-			# users << user
-			new_membership = Membership.create(user_id: user.id, user_group_id: user_group.id)
-			# puts "\n\n" + ">" * 10 + "#{ new_membership.valid? }" + "\n\n"
-			puts "\n\n" + ">" * 10 + "#{ new_membership }, #{ new_membership.valid? }" + "\n\n"
-			# puts "\n\n" + ">" * 10 + "#{ users.map{|user|user.name} }" + "\n\n"
-		# else
-			# user_group.location.errors.add(:ip_address, "Must have the same IP address to JOIN this group!") 
-			# puts "\n\n" + ">" * 10 + "#{ user_group.location.errors[:ip_address] }" + "\n\n"
-		# end
+		new_membership = Membership.create(user_id: user.id, user_group_id: user_group.id)
+		puts "\n\n" + ">" * 10 + "#{ new_membership }, #{ new_membership.valid? }" + "\n\n"
 
 		redirect "/user_groups/#{ user_group.id }"
 	else
@@ -60,9 +38,6 @@ end
 get '/user_groups/:id' do 
 	@user = User.find_by(id: session[:id])
 	@user_group = UserGroup.find_by(id: params[:id])
-	# puts "\n\n" + ">" * 10 + @user_group.class.to_s + "\n\n"
-	# puts "\n\n" + ">" * 10 + @user_group.location.class.to_s + "\n\n"
-	# puts "\n\n" + ">" * 10 + "#{ @user_group.location.users.map{|user|user.name} }" + "\n\n"
 	@users = @user_group.memberships
 	erb	:"/user_groups/show"
 end
@@ -85,4 +60,24 @@ get '/user_groups/:id/get_employees' do
 	end
 	p users
 	users.to_json
+end
+
+post '/user_groups/:id/change_state' do 
+	content_type :json
+
+	user = User.find_by(id: session[:user_id])
+	user_group = user.user_groups.find_by(id: params[:id])
+	user_group_membership = user_group.memberships.find_by(user_group_id: params[:id])
+	puts "\n\n" + ">" * 10 + "#{ user.name }.current_ip: #{ user.current_ip }" + "\n\n"
+	puts "\n\n" + ">" * 10 + "#{ user_group.name }.ip_address: #{ user_group.location.ip_address }" + "\n\n"
+	if user.current_ip == user_group.location.ip_address
+		puts "\n\n" + ">" * 10 + "[BEFORE] #{ user.name }.in_office: #{ user_group_membership.inOffice? }" + "\n\n"
+		user_group_membership.change_state
+		puts "\n\n" + ">" * 10 + "[AFTER] #{ user.name }.in_office: #{ user_group_membership.inOffice? }" + "\n\n"
+		p user_group_membership.inOffice? ? "#{ user.name } is IN" : "#{ user.name } is OUT"
+		return user_group_membership.inOffice? ? { state: "in", errors: user.errors[:in_office] }.to_json : { state: "out", errors: user.errors[:in_office] }.to_json
+	else
+		user_group_membership.errors.add(:in_office, "Your current ip DOES NOT match that of this group!")
+		return user_group_membership.inOffice? ? { state: "in", errors: user.errors[:in_office] }.to_json : { state: "out", errors: user.errors[:in_office] }.to_json
+	end
 end

@@ -19,7 +19,7 @@ class Membership < ActiveRecord::Base
     self.update_attribute("in_office", "f")
   end
 
-  def inOffice # => NEEDS WORK! 
+  def inOffice # => NEEDS WORK! -- renaming + investigate use
     ip_address = self.user.current_ip #UDPSocket.open {|s| s.connect('64.233.187.99', 1); s.addr.last }
     location = Location.create!(  name: "#{self.first_name}_location",
                                    ip:   ip_address  ) # => SHOULD NOT SAVE!!!
